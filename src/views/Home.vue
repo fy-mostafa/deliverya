@@ -95,7 +95,7 @@
 				<q-tab class="text-teal" name="alarms" label="Pending" />
 				<q-tab class="text-teal" name="movies" label="Active" />
 			</q-tabs>
-
+ 
 			<div class="q-gutter-y-sm">
 				<q-tab-panels
 					v-model="tab" 
