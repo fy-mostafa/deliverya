@@ -98,7 +98,7 @@
 
 			<div class="q-gutter-y-sm">
 				<q-tab-panels
-					v-model="tab"
+					v-model="tab" 
 					animated
 					transition-prev="jump-up"
 					transition-next="jump-down"
