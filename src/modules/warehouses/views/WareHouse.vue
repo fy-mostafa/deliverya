@@ -10,8 +10,8 @@
         align="justify-left"
       >
 
-        <q-tab name="alarms" label="Alarms" />
-        <q-tab name="movies" label="Movies" />
+        <q-tab name="alarms" label="Registered Stores" />
+        <q-tab name="movies" label="Blocked Stores" />
       </q-tabs>
 
       <q-separator />
@@ -21,31 +21,36 @@
 
         <q-tab-panel name="alarms">
            <q-table
-      title="Treats"
       :rows="rows"
       :columns="columns"
       row-key="name"
-      selection="multiple"
       v-model:selected="selected"
       dir="rtl"
     >
-      <template v-slot:header-selection="scope">
-        <q-toggle v-model="scope.selected" />
-      </template>
-
-      <template v-slot:body-selection="scope">
-        <q-toggle  v-model="scope.selected" />
-
-      </template>
+     
 
       <template v-slot:body-cell-actions>
         <q-td>
-<p>test</p>
+   <i class="fas fa-pen q-ml-md" id="edite"></i>
+   <i class="fas fa-trash-alt" id="delete"></i>
         </q-td>
        
       </template>
 
-      
+       <template v-slot:body-cell-status>
+        <q-td>
+<q-toggle
+      v-model="value"
+      color="blue"
+    />
+        </q-td>
+       
+      </template>
+
+      <template v-slot:top>
+ <q-btn color="primary"  label="Add Store" @click="prompt = true" />
+      </template>
+  
   
       
     </q-table>
@@ -53,37 +58,85 @@
 
         <q-tab-panel name="movies">
               <q-table
-      title="Treats"
       :rows="rows"
       :columns="columns"
       row-key="name"
-      selection="multiple"
       v-model:selected="selected"
        dir="rtl"
     >
-      <template v-slot:header-selection="scope">
-        <q-toggle v-model="scope.selected" />
-      </template>
-
-      <template v-slot:body-selection="scope">
-        <q-toggle  v-model="scope.selected" />
-
-      </template>
+      
 
       <template v-slot:body-cell-actions>
         <q-td>
-<p>no</p>
+   <i class="fas fa-pen q-ml-md" id="edite"></i>
+   <i class="fas fa-trash-alt" id="delete"></i>
+        </q-td>
+       
+      </template>
+
+     <template v-slot:body-cell-status>
+        <q-td>
+<q-toggle
+      v-model="value"
+      color="blue"
+    />
         </q-td>
        
       </template>
 
       
-  
       
     </q-table>
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
+
+
+      <q-dialog v-model="prompt" persistent>
+      <q-card style="min-width: 350px">
+        <q-card-section>
+          <div class="text-h6">Your address</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-form
+      
+      class="q-gutter-md"
+    >
+      <q-input
+        filled
+        label="Your name *"
+        hint="Name and surname"
+        lazy-rules
+        :rules="[ val => val && val.length > 0 || 'Please type something']"
+      />
+
+      <q-input
+        filled
+        type="number"
+
+        label="Your age *"
+        lazy-rules
+        :rules="[
+          val => val !== null && val !== '' || 'Please type your age',
+          val => val > 0 && val < 100 || 'Please type a real age'
+        ]"
+      />
+
+    </q-form>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn label="Submit"   @clickk="onSubmit" type="submit" color="primary"/>
+
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+
+
+    
+
   </div>
 
 
@@ -105,129 +158,135 @@ const columns = [
     format: val => `${val}`,
     sortable: true
   },
-  { name: 'calories', align: 'center', label: 'Calories', field: 'calories', sortable: true },
-  { name: 'fat', label: 'Fat (g)', field: 'fat', sortable: true },
-  { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-  { name: 'protein', label: 'Protein (g)', field: 'protein' },
-  { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-  { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-  { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
+  { name: 'status', align: 'center', label: 'status', field: 'status', sortable: true },
+  { name: 'phone', label: 'phone', field: 'phone' },
+  { name: 'address', label: 'address', field: 'address' },
+  { name: 'name', label: 'name', field: 'name', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
+  { name: 'id', label: 'Id', field: 'id', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
 ]
 
 const rows = [
   {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
+
     carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium:23,
-    iron: '1%',
+    phone: 44466560,
+    address: 'Frozen ',
+     name: 'Frozen Yogurt',
+    id: 1,
 
   },
   {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
-    iron: '1%'
+  
+   
+
+    phone: 42866452,
+    address: 'Ice',
+     name: 'Ice cream sandwich',
+    id: 3
   },
   {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: '6%',
-    iron: '7%'
+   
+   
+
+    phone: 6634537,
+    address: 'Eclair',
+     name: 'Eclair',
+    id: 5
   },
   {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-    iron: '8%'
+  
+   
+ 
+    phone: 466435353,
+    address: 'Cupcake',
+     name: 'Cupcake',
+    id: 8
   },
   {
+    
+   
+    phone: 363221159,
+    address: 'Gingerbread',
     name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-    iron: '16%'
+    id: 16
   },
   {
+   
+   
+    phone: 26454324,
+    address: 'Jelly',
     name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-    iron: '0%'
+    id: 0
   },
   {
+   
+ 
+    phone: 138986445,
+    address: 'Lollipop',
     name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-    iron: '2%'
+    id: 2
   },
   {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-    iron: '45%'
+    
+    
+    phone: 67732345,
+    address: 'Honeycomb',
+   name: 'Honeycomb',
+    id: 45
   },
   {
+    
+   
+    phone: 43343249,
+    address: 'Donut',
     name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-    iron: '22%'
+    id: 22
   },
   {
+   
+  
+    phone: 42342347,
+    address: 'KitKat',
     name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
-    iron: '6%'
+    id: 6
   }
 ]
 
 export default {
   setup () {
+    
     return {
       selected: ref([]),
       columns,
       rows,
         tab: ref('alarms'),
       innerTab: ref('innerMails'),
-      splitterModel: ref(20)
+      splitterModel: ref(20),
+      value : ref(true),
+      prompt :ref(false),
+
+
+        onSubmit()
+      {
+        prompt.value = false 
+    
+      }
+
+     
+
+
     }
   }
 }
 </script>
+
+<style scoped>
+#edite{
+  cursor: pointer;
+  color: green;
+}
+#delete{
+  cursor: pointer;
+  color: red;
+}
+</style>
