@@ -106,7 +106,7 @@
 				>
 					<q-tab-panel name="alarms">
 						<div class="row q-pt-sm">
-							<div class="col-md-6 q-pa-md" v-for="(item, index) in active" :key="index">
+							<div class="col-md-6 col-12  q-pa-md" v-for="(item, index) in active" :key="index">
 								<q-card>
 									<q-card-section>
 										<div class="row tab justify-between">
@@ -126,7 +126,7 @@
 													<q-avatar size="33" class="q-mr-xs">
 														<img src="https://cdn.quasar.dev/img/avatar.png" />
 													</q-avatar>
-													<span class="text-black">Soap | x4 <span>more</span></span>
+													<span class="text-black">Soap | x4 <span @click="order_dp = true">more</span></span>
 												</p>
 											</div>
 											<div class="col-offset-8"></div>
@@ -138,7 +138,7 @@
 
 										<div class="q-pb-md">
 											<q-btn color="secondary" label="Assign" @click="card = true" />
-										</div>
+										</div> 
 									</q-card-actions>
 								</q-card>
 							</div>
@@ -155,7 +155,7 @@
 				>
 					<q-tab-panel name="movies">
 						<div class="row">
-							<div class="col-md-6 q-pa-md" v-for="(item, index) in active" :key="index">
+							<div class="col-md-6 col-12 q-pa-md " v-for="(item, index) in active" :key="index">
 								<q-card>
 									<q-card-section>
 										<div class="row tab justify-between">
@@ -172,21 +172,19 @@
 
 										<div class="row avatar justify-between">
 											<div class="col-md-4">
-												<p>
-													<q-avatar size="33" class="q-mr-xs">
+												<p>		  
+			  								<q-avatar size="33" class="q-mr-xs">
 														<img src="https://cdn.quasar.dev/img/avatar.png" />
 													</q-avatar>
-													<span class="text-black">Soap | x4 <span>more</span></span>
+													<span class="text-black">Soap | x4 <span @click="order_da = true">more</span></span>
 												</p>
 											</div>
-
 											<div class="col-offset-8"></div>
 										</div>
 									</q-card-section>
 									<q-separator></q-separator>
 									<q-card-actions class="text-black action justify-between q-py-sm">
 										<p>Order Price - 2311.00 <br /><span>Contact User - 24563112</span></p>
-
 										<div class="q-pb-md">
 											<q-btn color="red" label="Done" @click="confirm = true" />
 										</div>
@@ -211,10 +209,15 @@
 							</q-item-section>
 							<q-item-section>Image avatar</q-item-section>
 						</q-item>
-
 						<q-separator />
 					</q-list>
 				</q-card-section>
+				<q-separator />
+				<q-card-actions>
+					<div class="q-pb-md">
+                	<q-btn color="secondary" label="Assign" @click="card = true" />
+				</div>
+				</q-card-actions>
 			</q-card>
 		</q-dialog>
 
@@ -223,13 +226,63 @@
 				<q-card-section class="row items-center">
 					<span class="q-ml-sm">Are You Sure ?</span>
 				</q-card-section>
-
 				<q-card-actions align="right">
 					<q-btn flat label="No" color="primary" v-close-popup />
 					<q-btn flat label="Yes" color="primary" v-close-popup @click="card = false" />
 				</q-card-actions>
 			</q-card>
 		</q-dialog>
+
+		<q-dialog v-model="order_dp">
+			<q-card class="my-card">
+				<q-card-section class="q-pt-md">
+					<q-list bordered>
+						<q-item clickable v-ripple v-for="(dil, i) in dilivery" :key="i">
+							<q-item-section avatar>
+								<q-avatar>
+									<img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+								</q-avatar>
+							</q-item-section>
+							<q-item-section>Soab - price:10000</q-item-section>							
+						</q-item>
+						<q-separator />
+					</q-list>
+				</q-card-section>
+				<q-separator />
+				<q-card-actions align="right">
+					<div class="q-pb-md ">
+                	<q-btn color="secondary" label="Assign" @click="card = true" />
+				</div>
+				</q-card-actions>
+			</q-card>
+		</q-dialog>
+		<q-dialog v-model="order_da">
+			<q-card class="my-card">
+				<q-card-section class="q-pt-md">
+					<q-list bordered>
+						<q-item clickable v-ripple v-for="(dil, i) in dilivery" :key="i">
+							<q-item-section avatar>
+								<q-avatar>
+									<img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+								</q-avatar>
+							</q-item-section>
+							<q-item-section>Soab - price:10000</q-item-section>
+							
+						</q-item>
+
+						<q-separator />
+					</q-list>
+				</q-card-section>
+				<q-separator />
+				<q-card-actions align="right">
+					<div class="q-pb-md">
+                	<q-btn color="red" label="Done" @click="card = true" />
+				</div>
+				</q-card-actions>
+			</q-card>
+		</q-dialog>
+
+		
 	</div>
 </template>
 
@@ -239,12 +292,15 @@ export default {
 	name: 'Home',
 	components: {},
 	setup() {
+		 
 		return {
 			active: ref(8),
 			dilivery: ref(8),
 			tab: ref('movies'),
 			card: ref(false),
 			confirm: ref(false),
+			order_dp :ref(false),
+			order_da :ref(false),
 		};
 	},
 };
